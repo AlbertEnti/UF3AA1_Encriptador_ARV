@@ -1,10 +1,10 @@
 #include <iostream>
+#include <string>
 #include <fstream>
 #include "funciones_encriptar.h"
 
-/**/
-void main()
-{
-	menuPrincipal();
+using namespace std;
 
+void main(){
+	menuPrincipal();
 }
