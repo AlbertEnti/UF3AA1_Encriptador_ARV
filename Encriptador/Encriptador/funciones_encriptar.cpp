@@ -82,8 +82,8 @@ void encriptarMensaje(string palabras) {
 
 void añadirMensaje() {
 
-	ofstream recuperarMensaje_2;
-	recuperarMensaje_2.open("filename.txt", std::ios::app);
+	ofstream file;
+	file.open("filename.txt", std::ios::app);
 	string textoRecuperacion;
 	string palabrasAñadir;
 	
@@ -91,10 +91,10 @@ void añadirMensaje() {
 
 	while (palabrasAñadir != "exit") {
 		cin >> palabrasAñadir;
-		recuperarMensaje_2 << palabrasAñadir;
+		file << palabrasAñadir;
 		cout << "Sigue escribiendo, para salir escribe: exit" << endl;
 	}
-	recuperarMensaje_2.close();
+	file.close();
 
 	/*while (getline(recuperarMensaje_2, textoRecuperacion)) {
 		cout << textoRecuperacion << endl;
