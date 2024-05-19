@@ -1,13 +1,13 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <stdio.h> 
 
 using namespace std;
 void escribirMensaje();
 void recuperarMensaje();
 void añadirMensaje();
 void encriptarMensaje();
-void eliminarArchivo();
 
 
 void menuPrincipal() {
@@ -28,16 +28,17 @@ void escribirMensaje() {
 	ofstream escribirMensaje("filename.txt");
 
 	if (!escribirMensaje.is_open()) {
-		cout << "No se pudo abrir el archivo." << std::endl;
+		cout << "No se pudo abrir el archivo." << endl;
 		escribirMensaje.close();
 	}
-	cout << "Escribe lo que quieras" << std::endl;
+	cout << "Escribe lo que quieras" << endl;
 
 	while (palabras != "exit")
 	{
 		cin >> palabras;
-		escribirMensaje << palabras;
-		cout << "Sigue escribiendo, para salir escribe: exit" << std::endl;
+		escribirMensaje << palabras << endl;
+
+		cout << "Sigue escribiendo, para salir escribe: exit" << endl;
 	}
 	escribirMensaje.close();
 }
@@ -49,7 +50,7 @@ void recuperarMensaje() {
 	short opcionAñadir;
 	
 	cout << "Mensajes guardados detectados, ¿desea recuperarlos? " << endl;
-	cout << "1. Si / 2. No, quiero machacar el archivo " << endl;
+	cout << "1. Si / 2. No" << endl;
 
 	cin >> opcionAñadir;
 
@@ -59,7 +60,7 @@ void recuperarMensaje() {
 			añadirMensaje();
 			break;
 		case 2:
-			eliminarArchivo();
+			escribirMensaje();
 			break;
 		default:
 			cout << "Usa los números que se te dan!!!" << endl;
@@ -67,31 +68,37 @@ void recuperarMensaje() {
 		}
 }
 
-void encriptarMensaje() {
+void encriptarMensaje(string palabras) {
+	
+	char letraEncriptacion;
 
+	for (short i = 0; i < palabras.length(); i++) {
+
+		letraEncriptacion = palabras[i];
+
+		letraEncriptacion = letraEncriptacion + 4;
+	}
 }
 
 void añadirMensaje() {
 
+	ofstream recuperarMensaje_2;
+	recuperarMensaje_2.open("filename.txt", std::ios::app);
 	string textoRecuperacion;
 	string palabrasAñadir;
-	ofstream recuperarMensaje_2("filename.txt", std::ios::app);
-
-	while (getline(recuperarMensaje_2, textoRecuperacion)) {
-		cout << textoRecuperacion << endl;
-	}
-
-	cout << "Escribe lo que quieras" << std::endl;
+	
+	cout << "Escribe lo que quieras" << endl;
 
 	while (palabrasAñadir != "exit") {
 		cin >> palabrasAñadir;
 		recuperarMensaje_2 << palabrasAñadir;
-		cout << "Sigue escribiendo, para salir escribe: exit" << std::endl;
+		cout << "Sigue escribiendo, para salir escribe: exit" << endl;
 	}
+	recuperarMensaje_2.close();
+
+	/*while (getline(recuperarMensaje_2, textoRecuperacion)) {
+		cout << textoRecuperacion << endl;
+	}
+	*/
 }
 
-void eliminarArchivo() {
-	remove("filename.txt");
-	cout << "Archivo eliminado, saliendo del programa..." << endl;
-	exit(0);
-}
