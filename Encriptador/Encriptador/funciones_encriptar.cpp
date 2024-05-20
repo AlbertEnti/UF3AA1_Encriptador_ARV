@@ -1,13 +1,13 @@
-#include <iostream>
+#define NUMERO_ENCRIPTACION 4 // Definimos cuantos números le queremos sumar en la tabla ASCII al char.
+#include <iostream> // Incluimos todas las librerías necesarias para que nuestro código pueda funcionar correctamente.
 #include <string>
 #include <fstream>
-#include <stdio.h> 
+
 
 using namespace std;
 void escribirMensaje();
 void recuperarMensaje();
 void añadirMensaje();
-void encriptarMensaje();
 
 
 void menuPrincipal() {
@@ -25,30 +25,41 @@ void menuPrincipal() {
 void escribirMensaje() {
 
 	string palabras;
-	ofstream escribirMensaje("filename.txt");
+	string mensajeEncriptado;
+	char letraEncriptacion;
+	
+	ofstream file("filename.txt");
 
-	if (!escribirMensaje.is_open()) {
+	if (!file.is_open()) {
 		cout << "No se pudo abrir el archivo." << endl;
-		escribirMensaje.close();
+		file.close();
 	}
 	cout << "Escribe lo que quieras" << endl;
 
 	while (palabras != "exit")
 	{
 		cin >> palabras;
-		escribirMensaje << palabras << endl;
+
+		for (short i = 0; i < palabras.length(); i++) {
+
+			letraEncriptacion = palabras[i];
+
+			letraEncriptacion = letraEncriptacion + NUMERO_ENCRIPTACION;
+
+			mensajeEncriptado = letraEncriptacion;
+
+			file << mensajeEncriptado;
+		}
 
 		cout << "Sigue escribiendo, para salir escribe: exit" << endl;
 	}
-	escribirMensaje.close();
+	file.close();
 }
 
 void recuperarMensaje() {
 	
-	string palabras;
-	string textoRecuperacion;
 	short opcionAñadir;
-	
+
 	cout << "Mensajes guardados detectados, ¿desea recuperarlos? " << endl;
 	cout << "1. Si / 2. No" << endl;
 
@@ -68,35 +79,33 @@ void recuperarMensaje() {
 		}
 }
 
-void encriptarMensaje(string palabras) {
-	
-	char letraEncriptacion;
-
-	for (short i = 0; i < palabras.length(); i++) {
-
-		letraEncriptacion = palabras[i];
-
-		letraEncriptacion = letraEncriptacion + 4;
-	}
-}
-
 void añadirMensaje() {
 
 	ofstream file;
 	file.open("filename.txt", std::ios::app);
-	string textoRecuperacion;
+	string mensajeEncriptado;
 	string palabrasAñadir;
+	char letraEncriptacion;
 	
 	cout << "Escribe lo que quieras" << endl;
 
 	while (palabrasAñadir != "exit") {
 		cin >> palabrasAñadir;
-		file << palabrasAñadir;
+		for (short i = 0; i < palabrasAñadir.length(); i++) {
+
+			letraEncriptacion = palabrasAñadir[i];
+
+			letraEncriptacion = letraEncriptacion + NUMERO_ENCRIPTACION;
+
+			mensajeEncriptado = letraEncriptacion;
+
+			file << mensajeEncriptado;
+		}
 		cout << "Sigue escribiendo, para salir escribe: exit" << endl;
 	}
 	file.close();
 
-	/*while (getline(recuperarMensaje_2, textoRecuperacion)) {
+	/*while (getline(file, textoRecuperacion)) {
 		cout << textoRecuperacion << endl;
 	}
 	*/
