@@ -80,17 +80,43 @@ void recuperarMensaje() {
 }
 
 void añadirMensaje() {
-
+	// 
 	ofstream file;
 	file.open("filename.txt", std::ios::app);
+	string mensajeDesencriptado;
 	string mensajeEncriptado;
 	string palabrasAñadir;
 	char letraEncriptacion;
+
+	// 1. Desencriptación mensajes anteriores
+		
+	file >> mensajeDesencriptado;
+
+	for (short i = 0; i < mensajeDesencriptado.length(); i++) {
+
+		letraEncriptacion = palabrasAñadir[i];
 	
+		letraEncriptacion = letraEncriptacion - NUMERO_ENCRIPTACION;
+
+		mensajeDesencriptado = letraEncriptacion;
+
+		file << mensajeDesencriptado;
+	}
+
+
+	// 2. Mostramos mensajes anteriores
+
+	while (getline(file, mensajeDesencriptado)) {
+		cout << mensajeDesencriptado << endl;
+	}
 	cout << "Escribe lo que quieras" << endl;
 
+	
+	// 3. Añadir
 	while (palabrasAñadir != "exit") {
 		cin >> palabrasAñadir;
+
+	// 4. Encriptación
 		for (short i = 0; i < palabrasAñadir.length(); i++) {
 
 			letraEncriptacion = palabrasAñadir[i];
