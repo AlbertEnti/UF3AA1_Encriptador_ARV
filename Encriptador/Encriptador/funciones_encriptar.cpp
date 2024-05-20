@@ -1,4 +1,4 @@
-#define NUMERO_ENCRIPTACION 4 // Definimos cuantos números le queremos sumar en la tabla ASCII al char.
+#define NUMERO_ENCRIPTACION 10 // Definimos cuantos números le queremos sumar en la tabla ASCII al char.
 #include <iostream> // Incluimos todas las librerías necesarias para que nuestro código pueda funcionar correctamente.
 #include <string>
 #include <fstream>
@@ -13,8 +13,10 @@ void añadirMensaje();
 void menuPrincipal() {
 
 	ifstream file("filename.txt");
+	
 	file.open("filename.txt");
 
+	// Si el archivo se puede abrir quiere decir que existe, haciendo que vaya directamente a la función "recuperar", en caso de que no exista irá hacia "escribir".
 	if (file.is_open()) {
 		recuperarMensaje();
 	}
@@ -24,22 +26,25 @@ void menuPrincipal() {
 
 void escribirMensaje() {
 
+	// Declaramos las variables + abrimos el archivo.
 	string palabras;
 	string mensajeEncriptado;
 	char letraEncriptacion;
-	
 	ofstream file("filename.txt");
 
+	// En el caso de que no se pueda abrir el archivo saldrá por pantalla y hará que acabe el programa.
 	if (!file.is_open()) {
 		cout << "No se pudo abrir el archivo." << endl;
 		file.close();
 	}
 	cout << "Escribe lo que quieras" << endl;
 
+
 	while (palabras != "exit")
 	{
 		cin >> palabras;
 
+		// Método de encriptación.
 		for (short i = 0; i < palabras.length(); i++) {
 
 			letraEncriptacion = palabras[i];
@@ -48,11 +53,10 @@ void escribirMensaje() {
 
 			mensajeEncriptado = letraEncriptacion;
 
-			file << mensajeEncriptado;
+			file << mensajeEncriptado;	
 		}
-
 		cout << "Sigue escribiendo, para salir escribe: exit" << endl;
-	}
+	}	
 	file.close();
 }
 
@@ -65,6 +69,7 @@ void recuperarMensaje() {
 
 	cin >> opcionAñadir;
 
+		// Hacemos un switch case en el que vamos a tener las dos funciones para depende de lo que necesite. 
 		switch (opcionAñadir) {
 		
 		case 1:
@@ -80,12 +85,14 @@ void recuperarMensaje() {
 }
 
 void añadirMensaje() {
-	// 
-	ofstream file;
+	// Abrimos el archivo filename en modo append para añadir a lo ya escrito + declaramos las variables necesarias.
+	fstream file;
 	file.open("filename.txt", std::ios::app);
 	string mensajeDesencriptado;
 	string mensajeEncriptado;
 	string palabrasAñadir;
+	string palabrasDesencriptar;
+	char letraDesencriptacion;
 	char letraEncriptacion;
 
 	// 1. Desencriptación mensajes anteriores
@@ -94,25 +101,22 @@ void añadirMensaje() {
 
 	for (short i = 0; i < mensajeDesencriptado.length(); i++) {
 
-		letraEncriptacion = palabrasAñadir[i];
+		letraDesencriptacion = palabrasDesencriptar[i];
 	
-		letraEncriptacion = letraEncriptacion - NUMERO_ENCRIPTACION;
+		letraDesencriptacion = letraDesencriptacion - NUMERO_ENCRIPTACION;
 
-		mensajeDesencriptado = letraEncriptacion;
-
-		file << mensajeDesencriptado;
+		mensajeDesencriptado = letraDesencriptacion;
 	}
 
-
-	// 2. Mostramos mensajes anteriores
-
+	// 2. Mostramos mensajes anteriores. (NO FUNCIONA :/)
 	while (getline(file, mensajeDesencriptado)) {
 		cout << mensajeDesencriptado << endl;
 	}
+	
 	cout << "Escribe lo que quieras" << endl;
 
 	
-	// 3. Añadir
+	// 3. Añadimos todo el input a la string.
 	while (palabrasAñadir != "exit") {
 		cin >> palabrasAñadir;
 
@@ -130,10 +134,5 @@ void añadirMensaje() {
 		cout << "Sigue escribiendo, para salir escribe: exit" << endl;
 	}
 	file.close();
-
-	/*while (getline(file, textoRecuperacion)) {
-		cout << textoRecuperacion << endl;
-	}
-	*/
 }
 
