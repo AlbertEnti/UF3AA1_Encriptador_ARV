@@ -1,10 +1,9 @@
 #include <iostream>
 #include <fstream>
-#include "funciones_encriptar.h"
+#include "encriptar_desencriptar.h"
 
-/**/
+
 void main()
 {
 	menuPrincipal();
-
 }
